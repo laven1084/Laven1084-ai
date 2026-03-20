@@ -1,1 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Laven1084 AI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="background:black;color:white;text-align:center;">
 
+<h1>🤖 Laven1084 AI</h1>
+
+<input id="input" placeholder="Yaz..." style="width:70%;padding:10px;">
+<button onclick="send()">Gönder</button>
+
+<div id="chat"></div>
+
+<script>
+async function send() {
+  let input = document.getElementById("input").value;
+  let chat = document.getElementById("chat");
+
+  chat.innerHTML += "<p>Sen: " + input + "</p>";
+
+  let res = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Authorization": "Bearer API_KEYİNİ_YAZ",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      model: "gpt-4o-mini",
+      messages: [{ role: "user", content: input }]
+    })
+  });
+
+  let data = await res.json();
+  let cevap = data.choices[0].message.content;
+
+  chat.innerHTML += "<p>Laven1084: " + cevap + "</p>";
+}
+</script>
+
+</body>
+</html>
